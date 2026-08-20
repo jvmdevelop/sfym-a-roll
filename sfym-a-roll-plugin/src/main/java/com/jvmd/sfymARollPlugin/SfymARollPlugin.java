@@ -2,6 +2,7 @@ package com.jvmd.sfymARollPlugin;
 
 import com.jvmd.sfymARollPlugin.checker.CooldownChecker;
 import com.jvmd.sfymARollPlugin.checker.OnlinePlayerChecker;
+import com.jvmd.sfymARollPlugin.config.RollConfig;
 import com.jvmd.sfymARollPlugin.net.RollPluginMessageListener;
 import com.jvmd.sfymARollPlugin.player.ModdedPlayerRegistry;
 import com.jvmd.sfymARollPlugin.roll.RollHandler;
@@ -18,11 +19,17 @@ public final class SfymARollPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        CooldownChecker cooldownChecker = new CooldownChecker(1200L);
+        RollConfig rollConfig = RollConfig.load(this);
+        CooldownChecker cooldownChecker = new CooldownChecker(rollConfig.cooldownMillis());
         OnlinePlayerChecker onlinePlayerChecker = new OnlinePlayerChecker();
         ModdedPlayerRegistry moddedPlayerRegistry = new ModdedPlayerRegistry();
         RollState rollState = new RollState();
-        RollHandler rollHandler = new RollHandler(new RollProcessor(this, rollState));
+        RollHandler rollHandler = new RollHandler(new RollProcessor(
+                this,
+                rollState,
+                rollConfig.strength(),
+                rollConfig.iframeTicks()
+        ));
 
         rollPluginMessageListener = new RollPluginMessageListener(
                 rollHandler,
@@ -40,6 +47,8 @@ public final class SfymARollPlugin extends JavaPlugin {
                 rollHandler,
                 cooldownChecker,
                 moddedPlayerRegistry,
+                rollConfig.doubleShiftWindowMillis(),
+                rollConfig.handshakeWaitTicks(),
                 onlinePlayerChecker,
                 cooldownChecker
         ), this);

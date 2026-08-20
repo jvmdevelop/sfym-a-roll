@@ -6,15 +6,16 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
 public final class RollProcessor {
-    private static final double ROLL_STRENGTH = 1.15D;
-    private static final int ROLL_IFRAME_TICKS = 12;
-
     private final Plugin plugin;
     private final RollState rollState;
+    private final double strength;
+    private final int iframeTicks;
 
-    public RollProcessor(Plugin plugin, RollState rollState) {
+    public RollProcessor(Plugin plugin, RollState rollState, double strength, int iframeTicks) {
         this.plugin = plugin;
         this.rollState = rollState;
+        this.strength = strength;
+        this.iframeTicks = iframeTicks;
     }
 
     public boolean process(Player player) {
@@ -28,10 +29,10 @@ public final class RollProcessor {
             return false;
         }
 
-        Vector velocity = direction.normalize().multiply(ROLL_STRENGTH);
+        Vector velocity = direction.normalize().multiply(strength);
         velocity.setY(Math.min(player.getVelocity().getY(), 0.0D));
         player.setVelocity(velocity);
-        rollState.begin(player, plugin, ROLL_IFRAME_TICKS);
+        rollState.begin(player, plugin, iframeTicks);
         return true;
     }
 }

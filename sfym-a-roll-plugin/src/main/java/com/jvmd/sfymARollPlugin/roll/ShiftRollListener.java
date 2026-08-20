@@ -16,13 +16,12 @@ import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.plugin.Plugin;
 
 public final class ShiftRollListener implements Listener {
-    private static final long DOUBLE_SHIFT_WINDOW_MILLIS = 350L;
-    private static final long HANDSHAKE_WAIT_TICKS = 40L;
-
     private final Plugin plugin;
     private final RollHandler rollHandler;
     private final CooldownChecker cooldownChecker;
     private final ModdedPlayerRegistry moddedPlayerRegistry;
+    private final long doubleShiftWindowMillis;
+    private final long handshakeWaitTicks;
     private final List<Checker> checkers;
     private final Map<UUID, Long> lastSneakPresses = new ConcurrentHashMap<>();
 
@@ -31,12 +30,16 @@ public final class ShiftRollListener implements Listener {
             RollHandler rollHandler,
             CooldownChecker cooldownChecker,
             ModdedPlayerRegistry moddedPlayerRegistry,
+            long doubleShiftWindowMillis,
+            long handshakeWaitTicks,
             Checker... checkers
     ) {
         this.plugin = plugin;
         this.rollHandler = rollHandler;
         this.cooldownChecker = cooldownChecker;
         this.moddedPlayerRegistry = moddedPlayerRegistry;
+        this.doubleShiftWindowMillis = doubleShiftWindowMillis;
+        this.handshakeWaitTicks = handshakeWaitTicks;
         this.checkers = List.of(checkers);
     }
 
@@ -47,7 +50,7 @@ public final class ShiftRollListener implements Listener {
             if (player.isOnline() && !moddedPlayerRegistry.isModded(player)) {
                 moddedPlayerRegistry.markFallbackRoll(player);
             }
-        }, HANDSHAKE_WAIT_TICKS);
+        }, handshakeWaitTicks);
     }
 
     @EventHandler
@@ -63,7 +66,7 @@ public final class ShiftRollListener implements Listener {
 
         long now = System.currentTimeMillis();
         Long lastSneakPress = lastSneakPresses.put(player.getUniqueId(), now);
-        if (lastSneakPress == null || now - lastSneakPress > DOUBLE_SHIFT_WINDOW_MILLIS) {
+        if (lastSneakPress == null || now - lastSneakPress > doubleShiftWindowMillis) {
             return;
         }
 

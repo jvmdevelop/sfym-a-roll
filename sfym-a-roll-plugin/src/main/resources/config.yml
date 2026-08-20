@@ -1,0 +1,8 @@
+roll:
+  cooldown-millis: 1200
+  strength: 1.15
+  iframe-ticks: 12
+
+fallback:
+  double-shift-window-millis: 350
+  handshake-wait-ticks: 40
