@@ -1,0 +1,26 @@
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.classpath
+.project
+.settings/
+
+# Gradle
+.gradle/
+build/
+**/.gradle/
+**/build/
+
+# Runtime/server files
+run/
+**/run/
+
+# Forge MDK archive
+*.zip
+
+# OS/editor noise
+.DS_Store
+*.swp
+*~
