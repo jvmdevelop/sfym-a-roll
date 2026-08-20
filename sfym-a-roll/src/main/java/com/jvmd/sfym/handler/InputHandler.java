@@ -3,6 +3,7 @@ package com.jvmd.sfym.handler;
 import com.jvmd.sfym.SfymMod;
 import com.jvmd.sfym.network.RollNetwork;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -14,5 +15,10 @@ public class InputHandler {
         while (KeyBindings.ROLL.consumeClick()) {
             RollNetwork.sendRollRequest();
         }
+    }
+
+    @SubscribeEvent
+    public static void onClientLogin(ClientPlayerNetworkEvent.LoggingIn event) {
+        RollNetwork.onClientLogin(event);
     }
 }
