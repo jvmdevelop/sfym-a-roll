@@ -11,6 +11,8 @@ repositories {
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT")
+    compileOnly(files("libs/MMOCore-1.13.jar"))
+    compileOnly(files("libs/MythicLib-1.5.2.jar"))
 }
 
 java {

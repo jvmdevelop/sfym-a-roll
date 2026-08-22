@@ -7,6 +7,7 @@ public final class RollConfig {
     private final long cooldownMillis;
     private final double strength;
     private final int iframeTicks;
+    private final double manaCost;
     private final long doubleShiftWindowMillis;
     private final long handshakeWaitTicks;
 
@@ -14,12 +15,14 @@ public final class RollConfig {
             long cooldownMillis,
             double strength,
             int iframeTicks,
+            double manaCost,
             long doubleShiftWindowMillis,
             long handshakeWaitTicks
     ) {
         this.cooldownMillis = cooldownMillis;
         this.strength = strength;
         this.iframeTicks = iframeTicks;
+        this.manaCost = manaCost;
         this.doubleShiftWindowMillis = doubleShiftWindowMillis;
         this.handshakeWaitTicks = handshakeWaitTicks;
     }
@@ -31,6 +34,7 @@ public final class RollConfig {
                 config.getLong("roll.cooldown-millis", 1200L),
                 config.getDouble("roll.strength", 1.15D),
                 config.getInt("roll.iframe-ticks", 12),
+                config.getDouble("roll.mana-cost", 10.0D),
                 config.getLong("fallback.double-shift-window-millis", 350L),
                 config.getLong("fallback.handshake-wait-ticks", 40L)
         );
@@ -46,6 +50,10 @@ public final class RollConfig {
 
     public int iframeTicks() {
         return iframeTicks;
+    }
+
+    public double manaCost() {
+        return manaCost;
     }
 
     public long doubleShiftWindowMillis() {

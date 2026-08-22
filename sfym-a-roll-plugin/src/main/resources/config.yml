@@ -2,6 +2,7 @@ roll:
   cooldown-millis: 1200
   strength: 1.15
   iframe-ticks: 12
+  mana-cost: 10.0
 
 fallback:
   double-shift-window-millis: 350

@@ -28,7 +28,8 @@ public final class SfymARollPlugin extends JavaPlugin {
                 this,
                 rollState,
                 rollConfig.strength(),
-                rollConfig.iframeTicks()
+                rollConfig.iframeTicks(),
+                rollConfig.manaCost()
         ));
 
         rollPluginMessageListener = new RollPluginMessageListener(
